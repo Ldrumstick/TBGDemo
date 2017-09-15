@@ -11,11 +11,14 @@ public class Player : MonoBehaviour {
     public Enemy enemy;
     public Animator animator;
 
-    private Transform initTransform;
+    private Quaternion rotation;
+    private Vector3 position;
+
 
     private void Awake()
     {
-        initTransform = transform;
+        rotation = transform.localRotation;
+        position = transform.position;
     }
 
     void Update () {
@@ -37,17 +40,38 @@ public class Player : MonoBehaviour {
     /// </summary>
     public void ClickAttackBt()
     {
-        Debug.Log("玩家进行攻击");
         isShowingList = false;
+        attackBt.SetActive(false);
+        transform.localRotation = rotation;
+        transform.position = position;
+        StartCoroutine(WaitToAction());
         animator.SetTrigger("Attack");
-        manager.isAttacker = IsAttacker.ENEMY;
-        StartCoroutine(Wait());
+        int i = Random.Range(10, 20);
+        enemy.Damage(i);
+        Debug.Log("玩家进行攻击,-" + i);
+        StartCoroutine(WaitToEnemy());
+
     }
 
-    IEnumerator Wait()
+    IEnumerator WaitToAction()
+    { yield return new WaitForSeconds(1); }
+
+    IEnumerator WaitToEnemy()
     {
         yield return new WaitForSeconds(1);
-        transform.position = initTransform.position;
-        transform.rotation = initTransform.rotation;
+        manager.isAttacker = IsAttacker.ENEMY;
+        manager.isAttacked = false;
+        
+    }
+
+    /// <summary>
+    /// 受到攻击
+    /// </summary>
+    /// <param name="i"></param>
+    public void Damage(int i)
+    {
+        animator.SetTrigger("Damage");
+        playerHP -= i;
+
     }
 }

@@ -1036,6 +1036,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1de80849ed0ec0458656b838727eb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manager: {fileID: 1382774942}
+  player: {fileID: 39252389}
+  enemyHP: 100
+  animator: {fileID: 1677056020}
+--- !u!95 &1677056020 stripped
+Animator:
+  m_PrefabParentObject: {fileID: 9500000, guid: df0777a2e75ec7048b28e7c394efbd53,
+    type: 3}
+  m_PrefabInternal: {fileID: 2011946869}
 --- !u!1001 &2011946869
 Prefab:
   m_ObjectHideFlags: 0
@@ -1083,6 +1092,10 @@ Prefab:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: df0777a2e75ec7048b28e7c394efbd53, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1a080f91920849449a9250c5e7f8ee2c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0777a2e75ec7048b28e7c394efbd53, type: 3}
   m_IsPrefabParent: 0

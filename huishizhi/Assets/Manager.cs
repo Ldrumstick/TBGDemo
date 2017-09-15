@@ -13,7 +13,8 @@ public enum GameState
 public enum IsAttacker
 {
     PLAYER,  //轮到玩家攻击
-    ENEMY   //轮到敌人攻击
+    ENEMY,   //轮到敌人攻击
+    OVER
 }
 
 
@@ -28,6 +29,7 @@ public class Manager : MonoBehaviour {
     public GameObject attackBt;
     public Player playerScript;
     public Enemy enemyScript;
+    public bool isAttacked = false; //用于判断敌人是否已经攻击了一次
 
     private void Start()
     {
@@ -36,6 +38,27 @@ public class Manager : MonoBehaviour {
             beginBt.SetActive(true);
         }
         attackBt.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if(gameState == GameState.GAME)
+        {
+            if(playerScript.playerHP <= 0)
+            {
+                gameState = GameState.OVER;
+                Debug.Log("敌人赢");
+                isAttacker = IsAttacker.OVER;
+                playerScript.animator.SetTrigger("Dead");
+            }
+            if(enemyScript.enemyHP <= 0)
+            {
+                gameState = GameState.OVER;
+                Debug.Log("玩家赢");
+                isAttacker = IsAttacker.OVER;
+                enemyScript.animator.SetTrigger("Dead");
+            }
+        }
     }
     /// <summary>
     /// 当按下开始按钮
@@ -47,6 +70,7 @@ public class Manager : MonoBehaviour {
         playerScript.isShowingList = true;
         attackBt.SetActive(true);
     }
+   
 }
 
 
